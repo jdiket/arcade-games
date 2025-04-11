@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Arcade</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #00fffc;
+            text-shadow: 0 0 10px #00fffc, 0 0 20px #00fffc;
+            margin-bottom: 20px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ff00ff;
+            margin-bottom: 30px;
+        }
+        
+        .games-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .game-card {
+            background: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid #333;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 255, 252, 0.3);
+            border-color: #00fffc;
+        }
+        
+        .game-preview {
+            height: 180px;
+            background-color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .game-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .game-info {
+            padding: 20px;
+        }
+        
+        .game-title {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        
+        .game-description {
+            font-size: 0.9rem;
+            color: #aaaaaa;
+            margin-bottom: 15px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .play-button {
+            display: inline-block;
+            background: linear-gradient(to right, #ff00ff, #00fffc);
+            color: #000;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            text-align: center;
+        }
+        
+        .play-button:hover {
+            opacity: 0.8;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        /* Use a placeholder image for all game previews */
+        .placeholder {
+            background-color: #333;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 1.2rem;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>JavaScript Arcade</h1>
+        <p class="subtitle">Classic games reimagined for your browser</p>
+    </header>
+    
+    <main class="games-container">
+        <!-- Pong -->
+        <div class="game-card">
+            <div class="game-preview">
+                <div class="placeholder">Pong Preview</div>
+            </div>
+            <div class="game-info">
+                <h2 class="game-title">Pong</h2>
+                <p class="game-description">The classic table tennis arcade game. Challenge a friend or play against the computer.</p>
+                <a href="games/pong.html" class="play-button">PLAY NOW</a>
+            </div>
+        </div>
+        
+        <!-- Pacman -->
+        <div class="game-card">
+            <div class="game-preview">
+                <div class="placeholder">Pacman Preview</div>
+            </div>
+            <div class="game-info">
+                <h2 class="game-title">Pacman</h2>
+                <p class="game-description">Navigate through a maze while collecting dots and avoiding ghosts.</p>
+                <a href="games/pacman.html" class="play-button">PLAY NOW</a>
+            </div>
+        </div>
+        
+        <!-- Breakout -->
+        <div class="game-card">
+            <div class="game-preview">
+                <div class="placeholder">Breakout Preview</div>
+            </div>
+            <div class="game-info">
+                <h2 class="game-title">Breakout</h2>
+                <p class="game-description">Destroy all the bricks by bouncing a ball off your paddle.</p>
+                <a href="games/breakout.html" class="play-button">PLAY NOW</a>
+            </div>
+        </div>
+        
+        <!-- Blackjack -->
+        <div class="game-card">
+            <div class="game-preview">
+                <div class="placeholder">Blackjack Preview</div>
+            </div>
+            <div class="game-info">
+                <h2 class="game-title">Blackjack</h2>
+                <p class="game-description">Beat the dealer by getting cards that total closer to 21 than the dealer's.</p>
+                <a href="games/blackjack.html" class="play-button">COMING SOON</a>
+            </div>
+        </div>
+        
+        <!-- Simon -->
+        <div class="game-card">
+            <div class="game-preview">
+                <div class="placeholder">Simon Preview</div>
+            </div>
+            <div class="game-info">
+                <h2 class="game-title">Simon</h2>
+                <p class="game-description">Test your memory by repeating increasingly complex sequences of lights and sounds.</p>
+                <a href="games/simon.html" class="play-button">COMING SOON</a>
+            </div>
+        </div>
+        
+        <!-- Asteroids -->
+        <div class="game-card">
+            <div class="game-preview">
+                <div class="placeholder">Asteroids Preview</div>
+            </div>
+            <div class="game-info">
+                <h2 class="game-title">Asteroids</h2>
+                <p class="game-description">Pilot a spaceship through an asteroid field, shooting and avoiding space rocks.</p>
+                <a href="games/asteroids.html" class="play-button">COMING SOON</a>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>Created with ❤️ and JavaScript | &copy; 2025 JavaScript Arcade</p>
+    </footer>
+    
+    <script src="scripts/main.js"></script>
+</body>
+</html>
