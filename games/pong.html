@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong - JavaScript Arcade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Common Game Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Press Start 2P', cursive, Arial, sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #1e1e1e;
+            border-bottom: 3px solid #00fffc;
+        }
+        
+        .game-title {
+            color: #00fffc;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px #00fffc;
+        }
+        
+        .navigation {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-button {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+        }
+        
+        .nav-button:hover {
+            background: #444;
+            transform: translateY(-2px);
+        }
+        
+        .home-button {
+            background: #ff00ff;
+            color: #000;
+        }
+        
+        .game-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        canvas {
+            background: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 252, 0.5);
+        }
+        
+        .game-ui {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            z-index: 10;
+        }
+        
+        .score {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        
+        .controls-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+        
+        /* Pong specific styles */
+        canvas {
+            border: 2px solid #00fffc;
+        }
+        
+        /* Overlay for game start, pause, and end */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        
+        .overlay-content {
+            text-align: center;
+            padding: 30px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            border: 2px solid #00fffc;
+            max-width: 500px;
+        }
+        
+        .overlay-title {
+            font-size: 2rem;
+            color: #00fffc;
+            margin-bottom: 20px;
+        }
+        
+        .overlay-text {
+            font-size: 1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .overlay-button {
+            background: linear-gradient(to right, #ff00ff, #00fffc);
+            color: #000;
+            font-family: 'Press Start 2P', cursive;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .overlay-button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="game-header">
+        <h1 class="game-title">PONG</h1>
+        <div class="navigation">
+            <button id="restart-button" class="nav-button">Restart</button>
+            <button id="pause-button" class="nav-button">Pause</button>
+            <a href="../index.html" class="nav-button home-button">Arcade Home</a>
+        </div>
+    </header>
+    
+    <main class="game-container">
+        <canvas id="game-canvas" width="800" height="600"></canvas>
+        
+        <div class="game-ui">
+            <div class="score">Score: <span id="score-value">0-0</span></div>
+        </div>
+        
+        <div class="controls-info">
+            Player 1: W/S keys<br>
+            Single Player Mode
+        </div>
+        
+        <!-- Start Game Overlay -->
+        <div id="start-overlay" class="overlay">
+            <div class="overlay-content">
+                <h2 class="overlay-title">PONG</h2>
+                <p class="overlay-text">The classic table tennis game! Try to score by getting the ball past your opponent's paddle. First to 5 points wins!</p>
+                <button id="start-button" class="overlay-button">Start Game</button>
+            </div>
+        </div>
+        
+        <!-- Pause Overlay -->
+        <div id="pause-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h2 class="overlay-title">Game Paused</h2>
+                <p class="overlay-text">Take a breather!</p>
+                <button id="resume-button" class="overlay-button">Resume Game</button>
+            </div>
+        </div>
+        
+        <!-- Game Over Overlay -->
+        <div id="gameover-overlay" class="overlay hidden">
+            <div class="overlay-content">
+                <h2 class="overlay-title">Game Over</h2>
+                <p class="overlay-text">Final Score: <span id="final-score">0-0</span></p>
+                <button id="retry-button" class="overlay-button">Play Again</button>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Common utility scripts -->
+    <script src="../scripts/main.js"></script>
+    <!-- Game specific script -->
+    <script src="../scripts/games/pong.js"></script>
+</body>
+</html>
